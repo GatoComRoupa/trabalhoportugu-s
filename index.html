@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nos seus passos, o que faria Jesus?</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#e6e2da;--ink:#231a16;--mut:#6a5c52;--acc:#9a2a14;--panel:#f5f1e8;--line:#c9bdae;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13171c;--ink:#efe6d8;--mut:#a79b8b;--acc:#e5705a;--panel:#1c2229;--line:#33404b;color-scheme:dark}}
@@ -14,7 +14,7 @@ body{background:var(--bg);color:var(--ink);font-family:"Cormorant Garamond",Geor
 #stage{position:absolute;inset:0;touch-action:none}
 #stage canvas{display:block;width:100%;height:100%}
 #stage.free{cursor:grab}
-#hint{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);text-align:center;font-size:1.25rem;color:var(--mut);transition:opacity .4s;pointer-events:none}
+#hint{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);text-align:center;font-size:1.25rem;color:#e9dcc0;text-shadow:0 1px 6px #000;transition:opacity .4s;pointer-events:none}
 #dock{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translate(-50%,24px);display:flex;gap:10px;opacity:0;visibility:hidden;transition:.35s}
 #dock.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
 button{font:inherit;font-size:1.15rem;font-weight:700;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.6em 1.3em;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
@@ -50,7 +50,7 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 #knol.l #objs{opacity:1;visibility:visible}
 #art svg{width:min(44vh,70vw);height:min(44vh,70vw);filter:drop-shadow(0 14px 12px rgba(60,35,15,.3))}
 #art3{display:none;position:relative;width:min(86vw,780px);height:46vh;touch-action:none;cursor:grab}
-#art3::after{content:"Arraste para girar · rodinha do mouse para zoom";position:absolute;left:0;right:0;bottom:0;font-size:1.05rem;color:#7a6a58;pointer-events:none}
+#art3::after{content:"Arraste para rodar · roda do rato para zoom";position:absolute;left:0;right:0;bottom:0;font-size:1.05rem;color:#7a6a58;pointer-events:none}
 #objs.d3 #art3{display:block}
 #objs.d3 #art{display:none}
 #comp{display:none;width:min(92vw,1000px);height:74vh;grid-template-columns:1fr auto 1fr;grid-template-rows:1fr 1fr;gap:3vh 4vw;align-items:center;justify-items:center}
@@ -85,6 +85,7 @@ body.hide #dock,body.hide #zbox{opacity:0;visibility:hidden;pointer-events:none}
 #b3{position:absolute;inset:0;transition:opacity .9s}
 #knol.q #paper{opacity:1}
 #knol.l #b3{opacity:0;pointer-events:none}
+#bBio{align-self:flex-start}
 #oname{margin:0;font-size:2.6rem}
 .ob{display:flex;gap:10px}
 #oexp{margin:0;max-width:46ch;min-height:5.2em;font-size:1.45rem;line-height:1.3;opacity:0;transition:opacity .4s}
@@ -111,9 +112,9 @@ body.hide #dock,body.hide #zbox{opacity:0;visibility:hidden;pointer-events:none}
 <div id="stage"></div>
 <p id="hint">Clique no livro</p>
 <button id="hideb">Esconder botões</button>
-<div id="dock" role="toolbar" aria-label="Controles do livro">
-  <button id="bFree" aria-pressed="false">Girar</button>
-  <button id="bInfo" aria-pressed="false">Informações</button>
+<div id="dock" role="toolbar" aria-label="Controlos do livro">
+  <button id="bRot">Rodar</button><button id="bFree" aria-pressed="false">Câmara</button>
+  <button id="bInfo" aria-pressed="false">Informações</button><button id="bBack" hidden>Fechar capa</button>
   <button id="bKnol" class="bible" aria-pressed="false"><i></i>Knolling</button>
 </div>
 <div id="zbox" role="group" aria-label="Zoom">
@@ -125,9 +126,10 @@ body.hide #dock,body.hide #zbox{opacity:0;visibility:hidden;pointer-events:none}
   <dl>
     <div><dt>Título</dt><dd>Nos seus passos, o que faria Jesus?</dd></div>
     <div><dt>Título original</dt><dd>In His Steps: What Would Jesus Do?</dd></div>
-    <div><dt>Data de escritura</dt><dd class="acc">1896</dd></div>
+    <div><dt>Data de escrita</dt><dd class="acc">1896</dd></div>
     <div><dt>Escritor</dt><dd>Charles M. Sheldon</dd></div>
   </dl>
+  <button id="bBio">Biografia do autor</button>
 </aside>
 <section id="knol" aria-label="Knolling literário">
   <div id="bib"><div id="pg"></div><div class="lf" style="--a:-164deg"></div><div class="lf" style="--a:-160deg"></div><div class="lf" style="--a:-156deg"></div><div class="lf" style="--a:-152deg"></div><div class="lf" style="--a:-148deg"></div><div id="cv"></div></div>
@@ -135,10 +137,10 @@ body.hide #dock,body.hide #zbox{opacity:0;visibility:hidden;pointer-events:none}
   <div id="objs">
     <div id="art"></div><div id="art3"></div><div id="comp"></div>
     <h3 id="oname"></h3>
-    <div class="ob"><button id="b3d" disabled title="Chega na próxima etapa">Ver em 3D</button><button id="bExp" aria-pressed="false">Explicação</button></div>
+    <div class="ob"><button id="b3d" disabled title="Indisponível neste ecrã">Ver em 3D</button><button id="bExp" aria-pressed="false">Explicação</button></div>
     <p id="oexp"></p>
     <button id="prev" class="nav" aria-label="Objeto anterior">‹</button>
-    <button id="next" class="nav" aria-label="Próximo objeto">›</button>
+    <button id="next" class="nav" aria-label="Objeto seguinte">›</button>
     <div id="dots"></div>
   </div>
   <button id="close">Fechar</button>
@@ -168,9 +170,32 @@ function pages(vert){
   const t=new T.CanvasTexture(c);t.encoding=T.sRGBEncoding;t.anisotropy=8;return t}
 const m=t=>new T.MeshStandardMaterial({map:t,roughness:.65,metalness:0});
 const pm=v=>{const t=pages(v);return new T.MeshStandardMaterial({map:t,bumpMap:t,bumpScale:.6,roughness:.92,metalness:0})};
-const W=2.3,H=3.4,D=.42;
-const book=new T.Mesh(new T.BoxGeometry(W,H,D),[pm(true),m(tex(IMG.s)),pm(false),pm(false),m(tex(IMG.f)),m(tex(IMG.b))]);
-sc.add(book);
+const W=2.3,H=3.4,D=.44,TC=.07,RED=0x96231e;
+const book=new T.Group(),bkG=new T.Group();book.add(bkG);sc.add(book);
+const rm=new T.MeshStandardMaterial({color:RED,roughness:.7}),inn=new T.MeshStandardMaterial({color:0xe3d3ad,roughness:.9}),pap=new T.MeshStandardMaterial({color:0xefe4c8,roughness:.9});
+const box3=(w,h,d,mat,x,y,z)=>{const o=new T.Mesh(new T.BoxGeometry(w,h,d),mat);o.position.set(x,y,z);return o};
+bkG.add(box3(W-.035,H-.07,D-2*TC,[pm(true),pap,pm(false),pm(false),pap,pap],-.0175,0,0));
+const sp=new T.Mesh(new T.PlaneGeometry(D,H),m(spineTex()));sp.rotation.y=-Math.PI/2;sp.position.set(-W/2-.002,0,0);bkG.add(sp);
+function hinge(z,mat,front){const g=new T.Group();g.position.set(-W/2,0,z);g.add(box3(W,H,TC,front?[rm,rm,rm,rm,mat,inn]:[rm,rm,rm,rm,inn,mat],W/2,0,0));bkG.add(g);return g}
+const fc=hinge(D/2-TC/2,m(tex(IMG.f)),true),bc=hinge(-(D/2-TC/2),m(tex(IMG.b)),false);
+const PH=[{a:0,v:0,s:1},{a:0,v:0,s:-1}];let pry=0,pom=0,pt=0;
+const LV=[];[0,1].forEach(k=>{let prev=null;for(let i=0;i<4;i++){const g=new T.Group();g.position.z=PH[k].s*(.146-i*.005);bkG.add(g);const m2=new T.Mesh(new T.PlaneGeometry(W-.035,H-.07,12,1),new T.MeshStandardMaterial({color:0xf1e6c8,roughness:.9,side:T.DoubleSide}));m2.visible=false;g.add(m2);const l={c:PH[k],m:m2,g:.9-i*.15,K:48-i*6,a:0,v:0,prev:prev};LV.push(l);prev=l}});
+function curl(l,th){const a=l.m.geometry.attributes.position,n=13,ds=(W-.035)/12;let X=-W/2,Z=0;for(let c=0;c<n;c++){const ph=th*(1-.35*c/12);if(c){X+=ds*Math.cos(ph);Z+=l.c.s*ds*Math.sin(ph)}a.setX(c,X);a.setZ(c,Z);a.setX(n+c,X);a.setZ(n+c,Z)}a.needsUpdate=true;l.m.geometry.computeVertexNormals()}
+function phys(t){
+  const s=t/1000,dt=Math.min(.05,Math.max(.001,s-pt));pt=s;
+  let d=ry-pry;d-=Math.round(d/TAU)*TAU;pry=ry;
+  const om=d/dt,dw=om-pom;pom=om;
+  const ef=Math.sign(dw)*Math.max(0,Math.abs(dw)-30),ce=Math.min(.4,.0008*om*om);
+  PH.forEach(c=>{
+    c.v+=c.s*.3*ef;
+    c.v+=(60*(ce-c.a)-5*c.v)*dt;
+    c.a+=c.v*dt;
+    if(c.a<0){c.a=0;c.v=Math.max(0,-c.v*.25)}
+    if(c.a>1.1){c.a=1.1;c.v=Math.min(0,c.v)}});
+  LV.forEach(l=>{const up=l.prev||l.c;l.v+=l.c.s*l.g*.3*ef;l.v+=(l.K*(ce*.9-l.a)-4*l.v)*dt;l.a+=l.v*dt;
+    const lim=Math.max(0,up.a-.03);if(l.a>lim){l.a=lim;l.v=Math.min(l.v,up.v)}if(l.a<0){l.a=0;l.v=Math.max(0,-l.v*.2)}
+    l.m.visible=l.a>.005;if(l.m.visible)curl(l,l.a)});
+  fc.rotation.y=-PH[0].a;bc.rotation.y=PH[1].a}
 let mode='idle',rx=0,ry=0,vx=0,vy=0,px=0,off=0;
 let base=11,zt=1,A=1;
 function size(){
@@ -178,18 +203,97 @@ function size(){
   ren.setSize(w,h,false);cam.aspect=A;base=A<1?16:11;cam.updateProjectionMatrix()}
 addEventListener('resize',size);size();cam.position.z=base;
 const TAU=Math.PI*2,wrap=(v,t)=>v-Math.round((v-t)/TAU)*TAU;
-function tick(t){
-  requestAnimationFrame(tick);
-  if(mode==='free'){ry+=vy;rx+=vx;vx*=.93;vy*=.93}
-  else{
-    const ty=mode==='info'?.5:Math.sin(t/1800)*.3,tx=mode==='info'?-.1:.04;
-    ry=wrap(ry,ty);rx=wrap(rx,tx);ry+=(ty-ry)*.06;rx+=(tx-rx)*.06}
-  cam.position.z+=(base/zt-cam.position.z)*.12;
-  off=A>1?-.38*Math.tan(T.MathUtils.degToRad(16))*cam.position.z*A:0;
-  px+=((mode==='info'?off:0)-px)*.07;
-  book.rotation.set(rx,ry,0);book.position.set(px,Math.sin(t/1200)*.06,0);
-  ren.render(sc,cam)}
-requestAnimationFrame(tick);
+const lay=new T.Group(),flipG=new T.Group();sc.remove(book);sc.add(lay);lay.add(flipG);flipG.add(book);lay.position.y=D/2;book.rotation.x=-Math.PI/2;
+sc.background=new T.Color(0x2a1b12);sc.fog=new T.Fog(0x2a1b12,16,48);
+const wc=cv(512,512,g=>{g.fillStyle='#6d4629';g.fillRect(0,0,512,512);for(let i=0;i<420;i++){g.strokeStyle='rgba('+(Math.random()<.5?'40,22,10':'150,100,60')+','+Math.random()*.18+')';g.lineWidth=Math.random()*2+.5;const y=Math.random()*512,x=Math.random()*512;g.beginPath();g.moveTo(x,y);g.lineTo(x+120+Math.random()*320,y+(Math.random()-.5)*6);g.stroke()}g.fillStyle='rgba(20,10,4,.55)';[0,256].forEach(y=>g.fillRect(0,y,512,3))});
+wc.wrapS=wc.wrapT=T.RepeatWrapping;wc.repeat.set(30,30);
+const tbl=new T.Mesh(new T.PlaneGeometry(120,120),new T.MeshStandardMaterial({map:wc,roughness:.75}));tbl.rotation.x=-Math.PI/2;tbl.position.y=-.005;tbl.receiveShadow=true;sc.add(tbl);
+ren.shadowMap.enabled=true;ren.shadowMap.type=T.PCFSoftShadowMap;
+dl.position.set(-3,9,5);dl.castShadow=true;dl.shadow.mapSize.set(2048,2048);Object.assign(dl.shadow.camera,{left:-9,right:9,top:9,bottom:-9,near:1,far:30});dl.shadow.camera.updateProjectionMatrix();dl.shadow.bias=-.0004;
+book.traverse(o=>{if(o.isMesh)o.castShadow=true});
+function spineTex(){
+  const S=2,Cw=256*S,Ch=1976*S,u=S/2,c=document.createElement('canvas');c.width=Cw;c.height=Ch;const g=c.getContext('2d');
+  const t=new T.CanvasTexture(c);t.encoding=T.sRGBEncoding;t.anisotropy=ren.capabilities.getMaxAnisotropy();
+  const FN='"EB Garamond",Garamond,Georgia,serif';
+  function run(txt,x0,len,size,fill,glow,small,cy){
+    const ch=[...txt];let w=0;
+    const ws=ch.map((k,i)=>{const sz=small&&k!==' '&&i>0&&ch[i-1]!==' '?size*.8:size;g.font='500 '+sz+'px '+FN;const a=g.measureText(k).width;w+=a;return [k,sz,a]});
+    const gap=(len-w)/(ch.length-1);
+    g.save();g.fillStyle=fill;g.shadowColor=glow;g.shadowBlur=7*S;
+    let x=x0;ws.forEach(a=>{g.font='500 '+a[1]+'px '+FN;g.fillText(a[0],x,cy+size*.33);x+=a[2]+gap});g.restore()}
+  function draw(){
+    g.setTransform(1,0,0,1,0,0);g.shadowColor='transparent';g.shadowBlur=0;
+    const bg=g.createLinearGradient(0,0,Cw,0);bg.addColorStop(0,'#7c1019');bg.addColorStop(.5,'#a3202a');bg.addColorStop(1,'#7c1019');g.fillStyle=bg;g.fillRect(0,0,Cw,Ch);
+    g.translate(Cw,0);g.rotate(Math.PI/2);
+    const cy=Cw/2,gold=g.createLinearGradient(0,cy-50*u,0,cy+50*u);gold.addColorStop(0,'#f8dc82');gold.addColorStop(1,'#c9962c');
+    run('CHARLES SHELDON',.04*Ch,.276*Ch,52*S,'#ffffff','rgba(255,255,255,.45)',true,cy);
+    run('NOS SEUS PASSOS, O QUE FARIA JESUS?',.38*Ch,.52*Ch,42*S,gold,'rgba(255,215,120,.45)',false,cy);
+    g.save();g.fillStyle='#ffffff';g.shadowColor='rgba(255,255,255,.5)';g.shadowBlur=4*S;
+    const x0=.945*Ch-49*u;[143,121,143,128,136].forEach((l,i)=>g.fillRect(x0+i*22*u,cy-l*u/2,10*u,l*u));g.restore();
+    t.needsUpdate=true}
+  draw();
+  Promise.all(['500'].map(s=>document.fonts.load(s+' 40px "EB Garamond"'))).then(draw).catch(()=>{});
+  return t}
+function atoms(segs){const A=[];let cur=null;segs.forEach(sg=>{sg.t.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){cur=null}else{if(!cur){cur=[];A.push(cur)}cur.push({s:p,i:sg.i})}})});return A}
+function flapTex(){
+  const S=2,TW=1536*S,TH=2271*S,c=document.createElement('canvas');c.width=TW;c.height=TH;const g=c.getContext('2d');
+  const t=new T.CanvasTexture(c);t.encoding=T.sRGBEncoding;t.anisotropy=ren.capabilities.getMaxAnisotropy();
+  const PX=0,PY=0,PH2=TH,PW=TW*.79,FN='"EB Garamond",Garamond,Georgia,serif';
+  const P=[
+    [{t:'Charles Monroe Sheldon (1857–1946) foi um escritor norte-americano cuja sensibilidade social e talento narrativo o tornaram uma figura marcante da literatura do final do século XIX.'}],
+    [{t:'Observador atento do comportamento humano, transformava dilemas do quotidiano em histórias vivas, próximas e repletas de empatia.'}],
+    [{t:'Do seu impulso criativo, nasceu o livro '},{t:'Nos Seus Passos, o Que Faria Jesus?',i:1},{t:', rapidamente convertido num fenómeno mundial. Personagens intensas, escolhas difíceis e uma pergunta simples, mas perturbadora, fizeram deste livro um marco cultural intemporal.'}],
+    [{t:'Ao longo da sua vida, Sheldon conciliou a escrita com um forte compromisso cívico, envolvendo-se em projetos de educação, imprensa e intervenção social.'}],
+    [{t:'O seu legado perdura pela capacidade de unir literatura, ética e humanidade, convidando cada leitor a pensar no impacto das suas próprias decisões e no poder silencioso que cada gesto pode ter na vida dos outros.'}]];
+  function draw(){
+    g.shadowColor='transparent';g.shadowBlur=0;g.shadowOffsetX=0;
+    g.fillStyle='#e3d3ad';g.fillRect(0,0,TW,TH);
+    g.save();g.shadowColor='rgba(0,0,0,.35)';g.shadowBlur=24*S;g.shadowOffsetX=6*S;
+    const gr=g.createLinearGradient(PX,PY,PX+PW,PY+PH2);gr.addColorStop(0,'#b8202c');gr.addColorStop(1,'#8b111e');g.fillStyle=gr;g.fillRect(PX,PY,PW,PH2);g.restore();
+    g.save();g.shadowColor='rgba(255,215,120,.5)';g.shadowBlur=10*S;
+    const tg=g.createLinearGradient(0,PY+PH2*.15,0,PY+PH2*.27);tg.addColorStop(0,'#f8dc82');tg.addColorStop(1,'#c9962c');g.fillStyle=tg;
+    ['CHARLES','SHELDON'].forEach((w,k)=>{g.font='500 '+96*S+'px '+FN;const sp=32*S;let wd=0;for(const ch of w)wd+=g.measureText(ch).width+sp;wd-=sp;let x=PX+PW/2-wd/2;const y=PY+PH2*(.205+k*.058);for(const ch of w){g.fillText(ch,x,y);x+=g.measureText(ch).width+sp}});
+    g.restore();
+    const FS=38*S,LH=55*S,mx=PW*.14,L=PX+mx,Wd=PW-2*mx;let y=PY+PH2*.335;
+    g.shadowColor='rgba(255,235,210,.35)';g.shadowBlur=7*S;g.fillStyle='#fbefdc';
+    const fnt=i=>(i?'italic ':'')+'400 '+FS+'px '+FN;
+    P.forEach(seg=>{
+      const A=atoms(seg).map(a=>{let w=0;a.forEach(p=>{g.font=fnt(p.i);p.w=g.measureText(p.s).width;w+=p.w});return {a:a,w:w}});
+      g.font=fnt(0);const sw=g.measureText(' ').width;
+      let line=[],lw=0;const lines=[];
+      A.forEach(x=>{if(line.length&&lw+sw+x.w>Wd){lines.push(line);line=[];lw=0}lw+=(line.length?sw:0)+x.w;line.push(x)});lines.push(line);
+      lines.forEach((ln,k)=>{
+        const tw=ln.reduce((s,x)=>s+x.w,0),last=k===lines.length-1,gap=last||ln.length<2?sw:(Wd-tw)/(ln.length-1);
+        let x=L;ln.forEach(at=>{at.a.forEach(p=>{g.font=fnt(p.i);g.fillText(p.s,x,y);x+=p.w});x+=gap});y+=LH});
+      y+=LH*.5});
+    t.needsUpdate=true}
+  draw();
+  Promise.all(['400','italic 400','500'].map(s=>document.fonts.load(s+' 40px "EB Garamond"'))).then(draw).catch(()=>{});
+  return t}
+fc.children[0].material[5]=new T.MeshStandardMaterial({map:flapTex(),roughness:.85});
+let az=0,el=.95,azT=0,elT=.95,cd=9,oe=0,fl=0,fFrom=0,fT0=0,flipping=false,fCount=0,lift=0,lastT=0;
+function doFlip(force){if(flipping||(mode==='bio'&&!force))return;flipping=true;fFrom=fl;fT0=performance.now()}
+function frame(t){
+  requestAnimationFrame(frame);
+  const dt=Math.min(.05,Math.max(.001,(t-lastT)/1000));lastT=t;
+  const fr=mode==='free',bio=mode==='bio';
+  if(!fr){azT=0;elT=bio?1.45:.95}
+  if(bio&&!flipping&&fCount%2)doFlip(1);
+  if(flipping){const u=Math.max(0,Math.min(1,(t-fT0)/1500));fl=fFrom+Math.PI*eio(u);lift=Math.sin(Math.PI*u)*1.4;
+    if(u>=1){flipping=false;fl=fFrom+Math.PI;fCount++;lift=0;PH[fCount%2?1:0].v+=2.2}}
+  const want=bio&&!flipping&&fCount%2===0?1:0;oe+=(want-oe)*Math.min(1,dt*2.5);
+  az+=(azT-az)*Math.min(1,dt*6);el+=(elT-el)*Math.min(1,dt*4);
+  cd+=(base*.85/(zt*(bio?1.5:1))-cd)*Math.min(1,dt*6);
+  off=A>1?-.38*Math.tan(.2793)*cd*A:0;
+  px+=((mode==='info'?off:0)-px)*Math.min(1,dt*4);
+  lay.position.x=px;lay.rotation.y+=((mode==='info'?.3:0)-lay.rotation.y)*Math.min(1,dt*4);
+  flipG.rotation.z=fl;flipG.position.y=lift;
+  ry=0;phys(t);sp.visible=oe<.35;
+  fc.rotation.y=-(PH[0].a+oe*3.13);fc.position.z=lp(D/2-TC/2,-(D/2-TC/2),oe);
+  const tx=-W*oe;
+  cam.position.set(tx+cd*Math.sin(az)*Math.cos(el),cd*Math.sin(el),cd*Math.cos(az)*Math.cos(el));cam.lookAt(tx,.2,0);
+  if(!(mode==='knol'&&K.classList.contains('l')))ren.render(sc,cam)}
+requestAnimationFrame(frame);
 const dock=$('dock'),btn={free:$('bFree'),info:$('bInfo'),knol:$('bKnol')};
 function setMode(n){
   mode=mode===n?'idle':n;
@@ -197,8 +301,8 @@ function setMode(n){
   stage.classList.toggle('free',mode==='free');
   $('panel').classList.toggle('on',mode==='info');
   mode==='knol'?openK():closeK();
-  $('hint').textContent=mode==='free'?'Arraste para girar o livro':'';
-  vx=vy=0}
+  $('hint').textContent=mode==='free'?'Arraste para mover a câmara':'';
+  vx=vy=0;$('bBack').hidden=mode!=='bio';if(mode==='bio'&&fCount%2)doFlip(1)}
 btn.free.onclick=()=>setMode('free');btn.info.onclick=()=>setMode('info');btn.knol.onclick=()=>setMode('knol');
 $('close').onclick=()=>setMode('knol');
 addEventListener('keydown',e=>{
@@ -206,10 +310,10 @@ addEventListener('keydown',e=>{
   if(dock.classList.contains('on')){const k={1:'free',2:'info',3:'knol'}[e.key];if(k)setMode(k)}});
 const K=$('knol');let tm=[],oi=0;
 const OBJ=[
-{n:'Sandálias',m:1,e:'Os passos do título. Seguir Jesus, no livro, não é só acreditar: é caminhar. Depois do desafio do pastor Maxwell, os moradores de Raymond passam um ano decidindo cada coisa a partir de uma única pergunta.',a:'<svg viewBox="0 0 200 200"><g fill="#b98a55" stroke="#2a1a14" stroke-width="3" stroke-linejoin="round"><path d="M52 150C38 120 44 70 70 52c22-12 40 6 38 36-2 30-8 52-26 66-10 6-24 2-30-4z"/><path d="M118 152c-12-24-6-66 18-86 22-12 38 8 34 36-3 28-12 46-30 54-10 4-18 0-22-4z"/></g><g fill="none" stroke="#2a1a14" stroke-width="7" stroke-linecap="round"><path d="M56 96q22-14 46 0M54 122q24-12 48 0M122 96q22-14 44 0M122 122q22-12 44 0"/></g></svg>'},
-{n:'Jornal',m:1,e:'Edward Norman, editor de jornal, representa a coragem de ser honesto no trabalho. Ele passa a publicar apenas o que Jesus publicaria, mesmo correndo o risco de perder o negócio.',a:'<svg viewBox="0 0 200 200"><g transform="rotate(-6 100 100)"><rect x="34" y="40" width="132" height="120" rx="3" fill="#f4ecd6" stroke="#2a1a14" stroke-width="3"/><rect x="44" y="50" width="112" height="18" fill="#2a1a14"/><rect x="44" y="76" width="44" height="34" fill="#b9ad90"/><path d="M96 80h60M96 90h60M96 100h60M44 120h112M44 130h112M44 140h80" stroke="#2a1a14" stroke-width="3" stroke-linecap="round"/></g></svg>'},
-{n:'Partitura',m:1,e:'Rachel Winslow é cantora e tem talento para a fama. A pergunta a leva a repensar para que usar a sua voz, como os artistas que, segundo a contracapa, abrem mão da fama.',a:'<svg viewBox="0 0 200 200"><g transform="rotate(5 100 100)"><rect x="40" y="30" width="120" height="140" rx="3" fill="#f6efdc" stroke="#2a1a14" stroke-width="3"/><path d="M52 64h96M52 72h96M52 80h96M52 88h96M52 96h96M52 118h96M52 126h96M52 134h96M52 142h96M52 150h96" stroke="#2a1a14" stroke-width="2"/><g fill="#2a1a14"><ellipse cx="72" cy="88" rx="6" ry="4.5"/><ellipse cx="100" cy="76" rx="6" ry="4.5"/><ellipse cx="128" cy="84" rx="6" ry="4.5"/><ellipse cx="80" cy="142" rx="6" ry="4.5"/><ellipse cx="118" cy="130" rx="6" ry="4.5"/></g><path d="M78 88V60M106 76V50M134 84V58M86 142V114M124 130V104" stroke="#2a1a14" stroke-width="2.5"/></g></svg>'},
-{n:'Moedas',m:1,e:'Virginia Page, herdeira, representa a pergunta que o dinheiro faz: o que fazer com o que se tem? Os empresários da cidade também enfrentam dilemas éticos.',a:'<svg viewBox="0 0 200 200"><g stroke="#2a1a14" stroke-width="3"><g><path d="M50 136v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="136" rx="40" ry="11" fill="#e0b440"/></g><g><path d="M50 124v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="124" rx="40" ry="11" fill="#e0b440"/></g><g><path d="M50 112v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="112" rx="40" ry="11" fill="#e0b440"/></g><g><path d="M50 100v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="100" rx="40" ry="11" fill="#e0b440"/></g><ellipse cx="152" cy="150" rx="26" ry="8" fill="#e0b440"/></g></svg>'},
+{n:'Sandálias',m:1,e:'Os passos do título. Seguir Jesus, no livro, não é apenas acreditar: é caminhar. Depois do desafio do reverendo Maxwell, os habitantes de Raymond passam um ano a decidir tudo a partir de uma única pergunta.',a:'<svg viewBox="0 0 200 200"><g fill="#b98a55" stroke="#2a1a14" stroke-width="3" stroke-linejoin="round"><path d="M52 150C38 120 44 70 70 52c22-12 40 6 38 36-2 30-8 52-26 66-10 6-24 2-30-4z"/><path d="M118 152c-12-24-6-66 18-86 22-12 38 8 34 36-3 28-12 46-30 54-10 4-18 0-22-4z"/></g><g fill="none" stroke="#2a1a14" stroke-width="7" stroke-linecap="round"><path d="M56 96q22-14 46 0M54 122q24-12 48 0M122 96q22-14 44 0M122 122q22-12 44 0"/></g></svg>'},
+{n:'Jornal',m:1,e:'Edward Norman, editor de jornal, representa a coragem de ser honesto no trabalho. Passa a publicar apenas o que Jesus publicaria, mesmo correndo o risco de perder o negócio.',a:'<svg viewBox="0 0 200 200"><g transform="rotate(-6 100 100)"><rect x="34" y="40" width="132" height="120" rx="3" fill="#f4ecd6" stroke="#2a1a14" stroke-width="3"/><rect x="44" y="50" width="112" height="18" fill="#2a1a14"/><rect x="44" y="76" width="44" height="34" fill="#b9ad90"/><path d="M96 80h60M96 90h60M96 100h60M44 120h112M44 130h112M44 140h80" stroke="#2a1a14" stroke-width="3" stroke-linecap="round"/></g></svg>'},
+{n:'Partitura',m:1,e:'Rachel Winslow é cantora e tem talento para a fama. A pergunta leva-a a repensar para que usar a sua voz, tal como os artistas que, segundo a contracapa, abdicam da fama.',a:'<svg viewBox="0 0 200 200"><g transform="rotate(5 100 100)"><rect x="40" y="30" width="120" height="140" rx="3" fill="#f6efdc" stroke="#2a1a14" stroke-width="3"/><path d="M52 64h96M52 72h96M52 80h96M52 88h96M52 96h96M52 118h96M52 126h96M52 134h96M52 142h96M52 150h96" stroke="#2a1a14" stroke-width="2"/><g fill="#2a1a14"><ellipse cx="72" cy="88" rx="6" ry="4.5"/><ellipse cx="100" cy="76" rx="6" ry="4.5"/><ellipse cx="128" cy="84" rx="6" ry="4.5"/><ellipse cx="80" cy="142" rx="6" ry="4.5"/><ellipse cx="118" cy="130" rx="6" ry="4.5"/></g><path d="M78 88V60M106 76V50M134 84V58M86 142V114M124 130V104" stroke="#2a1a14" stroke-width="2.5"/></g></svg>'},
+{n:'Moedas',m:1,e:'Virginia Page, herdeira, representa a pergunta que o dinheiro coloca: o que fazer com o que se tem? Os empresários da cidade também enfrentam dilemas éticos.',a:'<svg viewBox="0 0 200 200"><g stroke="#2a1a14" stroke-width="3"><g><path d="M50 136v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="136" rx="40" ry="11" fill="#e0b440"/></g><g><path d="M50 124v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="124" rx="40" ry="11" fill="#e0b440"/></g><g><path d="M50 112v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="112" rx="40" ry="11" fill="#e0b440"/></g><g><path d="M50 100v12a40 11 0 0 0 80 0v-12z" fill="#b8861f"/><ellipse cx="90" cy="100" rx="40" ry="11" fill="#e0b440"/></g><ellipse cx="152" cy="150" rx="26" ry="8" fill="#e0b440"/></g></svg>'},
 {n:'Knolling',c:1,e:'',a:''}];
 function comp(){
   $('comp').innerHTML=OBJ.slice(0,4).map((o,i)=>'<figure class="c'+i+'">'+o.a+'<figcaption>'+o.n+'</figcaption></figure>').join('')+'<figure class="cb"><img src="'+IMG.f+'" alt="Capa do livro"><figcaption>Nos seus passos, o que faria Jesus?</figcaption></figure>'}
@@ -335,6 +439,7 @@ function loop3(){
   C3.position.z=8/qz;W3.rotation.set(qx,qy,0);R3.render(S3,C3)}
 $('b3d').onclick=()=>{const on=$('objs').classList.toggle('d3');$('b3d').setAttribute('aria-pressed',on);
   if(on){if(!R3)init3();M3.forEach((g,i)=>{if(g)g.visible=i===oi});fit3();if(!run){run=true;requestAnimationFrame(loop3)}}};
+$('bRot').onclick=()=>doFlip();$('bBio').onclick=()=>setMode('bio');$('bBack').onclick=()=>setMode('bio');
 $('hideb').onclick=()=>{const h=document.body.classList.toggle('hide');$('hideb').textContent=h?'Mostrar botões':'Esconder botões'};
 $('prev').onclick=()=>show(oi-1);$('next').onclick=()=>show(oi+1);
 $('bExp').onclick=()=>{const o=$('oexp').classList.toggle('on');$('bExp').setAttribute('aria-pressed',o)};
@@ -349,14 +454,14 @@ const ray=new T.Raycaster();let down=null;
 stage.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY};stage.setPointerCapture(e.pointerId)});
 stage.addEventListener('pointermove',e=>{
   if(!down)return;
-  if(mode==='free'){vy=(e.clientX-down.lx)*.01;vx=(e.clientY-down.ly)*.01;ry+=vy;rx+=vx}
+  if(mode==='free'){azT-=(e.clientX-down.lx)*.008;elT=Math.min(1.5,Math.max(.3,elT+(e.clientY-down.ly)*.006))}
   down.lx=e.clientX;down.ly=e.clientY});
 stage.addEventListener('pointerup',e=>{
   const moved=down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)>5;down=null;
   if(moved)return;
   const r=stage.getBoundingClientRect();
   ray.setFromCamera({x:(e.clientX-r.left)/r.width*2-1,y:-((e.clientY-r.top)/r.height)*2+1},cam);
-  if(ray.intersectObject(book).length){dock.classList.add('on');$('zbox').classList.add('on');if(mode==='idle')$('hint').textContent=''}});
+  if(ray.intersectObject(book,true).length){dock.classList.add('on');$('zbox').classList.add('on');if(mode==='idle')$('hint').textContent=''}});
 </script>
 </body>
 </html>
